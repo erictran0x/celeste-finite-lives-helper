@@ -1,8 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>finite_lives_helper</RootNamespace>
+    <TargetFramework>net452</TargetFramework>
+    <RootNamespace>Celeste.Mod.FiniteLives</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Celeste">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Celeste\Celeste.exe</HintPath>
+    </Reference>
+    <Reference Include="FNA">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Celeste\FNA.dll</HintPath>
+    </Reference>
+    <Reference Include="MMHOOK_Celeste">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Celeste\MMHOOK_Celeste.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Celeste\YamlDotNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)output\$(ProjectName).dll&quot;&#xD;&#xA;cd &quot;$(SolutionDir)output&quot;&#xD;&#xA;7z a &quot;$(SolutionDir)\FiniteLivesHelper.zip&quot; *&#xD;&#xA;copy /Y &quot;$(SolutionDir)\FiniteLivesHelper.zip&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\Celeste\Mods\FiniteLivesHelper.zip&quot;" />
+  </Target>
 
 </Project>

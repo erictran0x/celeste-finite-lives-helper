@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "finite-lives-helper", "finite-lives-helper\finite-lives-helper.csproj", "{81ADDBAF-2138-42FF-9129-D23CF1B2B4EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "finite-lives-helper", "finite-lives-helper\finite-lives-helper.csproj", "{81ADDBAF-2138-42FF-9129-D23CF1B2B4EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "finite-lives-helper-tests", "finite-lives-helper-tests\finite-lives-helper-tests.csproj", "{AF09E506-8768-4A39-ADF9-39F1B938B133}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{81ADDBAF-2138-42FF-9129-D23CF1B2B4EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81ADDBAF-2138-42FF-9129-D23CF1B2B4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81ADDBAF-2138-42FF-9129-D23CF1B2B4EC}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{81ADDBAF-2138-42FF-9129-D23CF1B2B4EC}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{81ADDBAF-2138-42FF-9129-D23CF1B2B4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81ADDBAF-2138-42FF-9129-D23CF1B2B4EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF09E506-8768-4A39-ADF9-39F1B938B133}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{AF09E506-8768-4A39-ADF9-39F1B938B133}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{AF09E506-8768-4A39-ADF9-39F1B938B133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF09E506-8768-4A39-ADF9-39F1B938B133}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<finitelives>
+	<chapter name="Chapter1Name">
+		<level name="a-00" lives="5"></level>
+		<level name="a-01" lives="0"></level>
+		<level name="a-02" lives="not_a_number"></level>
+		<level name="a-03" lives="-892"></level>
+	</chapter>
+	<chapter name="Chapter2Name">
+		<level name="a-00" lives="9999"></level>
+	</chapter>
+</finitelives>

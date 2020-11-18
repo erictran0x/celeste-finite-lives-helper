@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <RootNamespace>Celeste.Mod.FiniteLives.Test</RootNamespace>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="finitelives_test.xml" />
+    <None Remove="finitelives_test2.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="finitelives_test2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="finitelives_test.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\finite-lives-helper\finite-lives-helper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Celeste">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Celeste\Celeste.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
