@@ -219,7 +219,7 @@ namespace Celeste.Mod.FiniteLives
         /// Parse an XML file to get number of available lives for each level for each chapter.
         /// </summary>
         /// <param name="filename">File name.</param>
-        private void ReadXMLFile(string filename)
+        public void ReadXMLFile(string filename)
         {
             // Read XML file
             using (XmlReader xml = XmlReader.Create(filename))
@@ -296,6 +296,9 @@ namespace Celeste.Mod.FiniteLives
             }
         }
 
+        /// <summary>
+        /// Store current values to session data.
+        /// </summary>
         private void SaveSessionData()
         {
             Session.LifeCount = lifeCount;
@@ -303,6 +306,10 @@ namespace Celeste.Mod.FiniteLives
             Session.Checksum = Session.HashCode();
         }
 
+        /// <summary>
+        /// Write message to log (verbose level).
+        /// </summary>
+        /// <param name="msg">Message.</param>
         private void Log(string msg)
         {
             Logger.Log("FiniteLives", msg);
