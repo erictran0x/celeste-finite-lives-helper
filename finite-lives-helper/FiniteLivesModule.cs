@@ -85,12 +85,9 @@ namespace Celeste.Mod.FiniteLives
             if (infiniteLives || HasGoldenBerry(player) || !enabled)
                 return;
 
+            // Decrement life count if player does not have infinite lives
             Log($"OnPlayerDeath: lifeCount={Math.Max(0, --lifeCount)}");
-
-            // Save session data
-            Session.LifeCount = lifeCount;
-            Session.InfiniteLives = infiniteLives;
-            Session.Checksum = Session.HashCode();
+            SaveSessionData();
 
             // Restart chapter if out of lives
             if (lifeCount == 0 && !shouldRestart)
@@ -138,6 +135,7 @@ namespace Celeste.Mod.FiniteLives
 
             lifeCount = Math.Max(lifeCount, newLives.Value);  // Don't punish player for being too good
             infiniteLives = newLives.Value <= 0;
+            SaveSessionData();
 
             Log($"OnLevelLoad: map={level.Session.MapData.Filename}, level: {level.Session.LevelData.Name}, lifeCount={lifeCount}, infiniteLives={infiniteLives}");
         }
@@ -221,7 +219,7 @@ namespace Celeste.Mod.FiniteLives
         /// Parse an XML file to get number of available lives for each level for each chapter.
         /// </summary>
         /// <param name="filename">File name.</param>
-        public void ReadXMLFile(string filename)
+        private void ReadXMLFile(string filename)
         {
             // Read XML file
             using (XmlReader xml = XmlReader.Create(filename))
@@ -296,6 +294,13 @@ namespace Celeste.Mod.FiniteLives
                     }
                 }
             }
+        }
+
+        private void SaveSessionData()
+        {
+            Session.LifeCount = lifeCount;
+            Session.InfiniteLives = infiniteLives;
+            Session.Checksum = Session.HashCode();
         }
 
         private void Log(string msg)
