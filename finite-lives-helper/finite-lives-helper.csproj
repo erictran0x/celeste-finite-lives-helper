@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FiniteLivesHelper.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Celeste">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Celeste\Celeste.exe</HintPath>
     </Reference>

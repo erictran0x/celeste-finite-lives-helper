@@ -13,6 +13,7 @@ namespace Celeste.Mod.FiniteLives
         private bool infiniteLives = true;
         private bool shouldRestart = false;
         private bool enabled = false;
+        private FiniteLivesDisplay display;
 
         public override Type SessionType => typeof(FiniteLivesSession);
         public static FiniteLivesSession Session => (FiniteLivesSession)Instance._Session;
@@ -35,6 +36,12 @@ namespace Celeste.Mod.FiniteLives
             Everest.Events.Level.OnLoadLevel += OnLevelLoad;
             Everest.Events.Level.OnExit += OnLevelExit;
             Everest.Events.Level.OnEnter += OnLevelEnter;
+
+            On.Celeste.LevelLoader.LoadingThread += (orig, self) =>
+            {
+                orig(self);
+                self.Level.Add(display = new FiniteLivesDisplay(self.Level));
+            };
         }
 
         /// <summary>
@@ -88,6 +95,7 @@ namespace Celeste.Mod.FiniteLives
             // Decrement life count if player does not have infinite lives
             Log($"OnPlayerDeath: lifeCount={Math.Max(0, --lifeCount)}");
             SaveSessionData();
+            display.SetDisplayText(lifeCount.ToString());
 
             // Restart chapter if out of lives
             if (lifeCount == 0 && !shouldRestart)
@@ -107,6 +115,7 @@ namespace Celeste.Mod.FiniteLives
         {
             // Check if chapter name is in the dictionary, return if otherwise
             enabled = chapters.TryGetValue(level.Session.MapData.Filename, out Chapter c);
+            display.SetEnabled(enabled);
             if (!enabled)
                 return;
 
@@ -124,9 +133,11 @@ namespace Celeste.Mod.FiniteLives
 
             // Check if player has not visited this level before, return if otherwise
             if (!level.NewLevel)
+            {
+                display.SetDisplayText(lifeCount.ToString());
                 return;
+            }
 
-            enabled = true;
             int? newLives = c.GetLives(level.Session.LevelData.Name);
 
             // Do not try to change life count if non-existent new life count
@@ -136,6 +147,7 @@ namespace Celeste.Mod.FiniteLives
             lifeCount = Math.Max(lifeCount, newLives.Value);  // Don't punish player for being too good
             infiniteLives = newLives.Value <= 0;
             SaveSessionData();
+            display.SetDisplayText(infiniteLives ? "inf" : lifeCount.ToString());
 
             Log($"OnLevelLoad: map={level.Session.MapData.Filename}, level: {level.Session.LevelData.Name}, lifeCount={lifeCount}, infiniteLives={infiniteLives}");
         }
