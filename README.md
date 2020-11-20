@@ -26,6 +26,7 @@ Non-positive numbers and non-numbers represent infinite lives.
 Build `finite-lives-helper.sln` and insert the built `finite-lives-helper.dll` into your mod archive. Of course, edit your `everest.yaml` accordingly. Tested and working with Everest build 1992.
 
 ## TODO
-- Display number of lives remaining in-game
+- User-setting that adjusts y-position of life display
+- Fade left/right animation on player spawn for life display
 - Submit the mod to gamebanana.com
 - Ability to disable "Save and Quit" menu option
