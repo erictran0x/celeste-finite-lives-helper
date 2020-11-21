@@ -197,9 +197,17 @@ namespace Celeste.Mod.FiniteLives
                 else
                 {
                     // User is not cheating, set values accordingly
-                    lifeCount = Session.LifeCount;
+                    lifeCount = --Session.LifeCount;
                     infiniteLives = Session.InfiniteLives;
+                    SaveSessionData();
                     Log($"OnLevelEnter: Session data is unmodified");
+
+                    // Restart chapter if out of lives
+                    if (lifeCount == 0)
+                    {
+                        shouldRestart = true;
+                        Log($"OnLevelEnter: Restarting chapter");
+                    }
                 }
             }
             else
