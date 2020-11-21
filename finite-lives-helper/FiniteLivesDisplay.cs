@@ -9,6 +9,8 @@ namespace Celeste.Mod.FiniteLives
         private readonly MTexture heartgem, bg, x;
         private string text;
         private float width;
+        private float timer = 0;
+        private float lerp = 0;
         private const float TEXT_PAD_L = 144;
         private const float TEXT_PAD_R = 12;
         private bool enabled = true;
@@ -30,13 +32,14 @@ namespace Celeste.Mod.FiniteLives
         }
 
         /// <summary>
-        /// Setter function for display text.
+        /// Setter function for display text. Also adjust width accordingly and reset timer.
         /// </summary>
         /// <param name="s">Display text.</param>
         public void SetDisplayText(string s)
         {
             text = s;
             width = ActiveFont.Measure(text).X + TEXT_PAD_L + TEXT_PAD_R;
+            timer = 3;
         }
 
         /// <summary>
@@ -61,22 +64,33 @@ namespace Celeste.Mod.FiniteLives
         }
 
         /// <summary>
-        /// Update function.
+        /// Update function for fade left/right transition.
         /// </summary>
         public override void Update()
         {
-            base.Update();
+            base.Update();          
+            if (timer > 0)
+            {
+                // Fade right
+                timer -= Engine.RawDeltaTime;
+                lerp = Calc.Approach(lerp, 1, 3.25f * Engine.RawDeltaTime);
+            }
+            else
+            {
+                // Fade left
+                lerp = Calc.Approach(lerp, 0, 1.75f * Engine.RawDeltaTime);
+            }
         }
 
         /// <summary>
-        /// Render function.
+        /// Render function for display object.
         /// </summary>
         public override void Render()
         {
             if (!enabled)
                 return;
 
-            Vector2 basePos = new Vector2(0, Y).Round();
+            Vector2 basePos = Vector2.Lerp(new Vector2(-width, Y), new Vector2(0, Y), Ease.CubeOut(lerp)).Round();
             bg.Draw(new Vector2(basePos.X + width - bg.Width, basePos.Y));
             heartgem.Draw(new Vector2(basePos.X + 26, basePos.Y - 24), Vector2.Zero, Color.White, new Vector2(0.29f, 0.29f));
             x.Draw(new Vector2(basePos.X + 94, basePos.Y - 15));
