@@ -27,6 +27,5 @@ Build `finite-lives-helper.sln` and insert the built `finite-lives-helper.dll` i
 
 ## TODO
 - User-setting that adjusts y-position of life display
-- Fade left/right animation on player spawn for life display
 - Submit the mod to gamebanana.com
 - Ability to disable "Save and Quit" menu option
