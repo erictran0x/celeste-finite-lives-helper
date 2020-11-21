@@ -41,6 +41,7 @@ namespace Celeste.Mod.FiniteLives
             {
                 orig(self);
                 self.Level.Add(display = new FiniteLivesDisplay(self.Level));
+                display.SetDisplayText("inf");
             };
         }
 
@@ -88,7 +89,7 @@ namespace Celeste.Mod.FiniteLives
         /// <param name="player">Player object.</param>
         private void OnPlayerDeath(Player player)
         {
-            // Don't do anything if fany of the conditions meet
+            // Don't do anything if any of the conditions meet
             if (infiniteLives || HasGoldenBerry(player) || !enabled)
                 return;
 
@@ -122,6 +123,7 @@ namespace Celeste.Mod.FiniteLives
             // Check if should restart chapter, do so if needed
             if (shouldRestart)
             {
+                display.SetDisplayText(infiniteLives ? "inf" : lifeCount.ToString());
                 Action restartChapter = delegate { Engine.Scene = new LevelExit(LevelExit.Mode.Restart, level.Session); };
                 if (isFromLoader)
                     level.DoScreenWipe(false, restartChapter);
@@ -134,7 +136,7 @@ namespace Celeste.Mod.FiniteLives
             // Check if player has not visited this level before, return if otherwise
             if (!level.NewLevel)
             {
-                display.SetDisplayText(lifeCount.ToString());
+                display.SetDisplayText(infiniteLives ? "inf" : lifeCount.ToString());
                 return;
             }
 
@@ -172,6 +174,7 @@ namespace Celeste.Mod.FiniteLives
                     // Reset player life count
                     lifeCount = 1;
                     infiniteLives = true;
+                    SaveSessionData();
                     break;
             }
         }
@@ -196,9 +199,9 @@ namespace Celeste.Mod.FiniteLives
                 }
                 else
                 {
-                    // User is not cheating, set values accordingly
-                    lifeCount = --Session.LifeCount;
+                    // User is not cheating, set values accordingly                   
                     infiniteLives = Session.InfiniteLives;
+                    lifeCount = Session.LifeCount - (infiniteLives ? 0 : 1);
                     SaveSessionData();
                     Log($"OnLevelEnter: Session data is unmodified");
 
@@ -216,6 +219,7 @@ namespace Celeste.Mod.FiniteLives
                 lifeCount = 1;
                 infiniteLives = true;
                 shouldRestart = false;
+                SaveSessionData();
                 Log($"OnLevelEnter: Entering from chapter select");
             }           
         }
@@ -324,6 +328,8 @@ namespace Celeste.Mod.FiniteLives
             Session.LifeCount = lifeCount;
             Session.InfiniteLives = infiniteLives;
             Session.Checksum = Session.HashCode();
+            this.SaveSession(SaveData.Instance.FileSlot);
+            Log($"SaveSessionData: {Session.LifeCount}, {Session.InfiniteLives}, {Session.Checksum}");
         }
 
         /// <summary>

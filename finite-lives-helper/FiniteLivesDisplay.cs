@@ -7,7 +7,7 @@ namespace Celeste.Mod.FiniteLives
     {
         private readonly Level level;
         private readonly MTexture heartgem, bg, x;
-        private string text;
+        private string text = "";
         private float width;
         private float timer = 0;
         private float lerp = 0;
@@ -37,6 +37,10 @@ namespace Celeste.Mod.FiniteLives
         /// <param name="s">Display text.</param>
         public void SetDisplayText(string s)
         {
+            // Don't update values if text doesn't change
+            if (text.Equals(s))
+                return;
+
             text = s;
             width = ActiveFont.Measure(text).X + TEXT_PAD_L + TEXT_PAD_R;
             timer = 3;
