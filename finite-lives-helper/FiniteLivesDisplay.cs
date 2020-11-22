@@ -61,7 +61,7 @@ namespace Celeste.Mod.FiniteLives
         /// <returns>Y-position of the display object.</returns>
         private float GetYPos()
         {
-            float y = 200f;  // TODO: make this a user setting
+            float y = 10f * FiniteLivesModule.Settings.DisplayPosition;
             if (!level.TimerHidden && Settings.Instance.SpeedrunClock != SpeedrunType.Off)
                 y += Settings.Instance.SpeedrunClock == SpeedrunType.File ? 78f : 58f;
             return y;
@@ -72,7 +72,10 @@ namespace Celeste.Mod.FiniteLives
         /// </summary>
         public override void Update()
         {
-            base.Update();          
+            base.Update();
+            if (level.Paused)
+                timer = 3;
+
             if (timer > 0)
             {
                 // Fade right
@@ -94,6 +97,7 @@ namespace Celeste.Mod.FiniteLives
             if (!enabled)
                 return;
 
+            Y = Calc.Approach(Y, GetYPos(), 100f * Engine.RawDeltaTime);
             Vector2 basePos = Vector2.Lerp(new Vector2(-width, Y), new Vector2(0, Y), Ease.CubeOut(lerp)).Round();
             bg.Draw(new Vector2(basePos.X + width - bg.Width, basePos.Y));
             heartgem.Draw(new Vector2(basePos.X + 26, basePos.Y - 24), Vector2.Zero, Color.White, new Vector2(0.29f, 0.29f));

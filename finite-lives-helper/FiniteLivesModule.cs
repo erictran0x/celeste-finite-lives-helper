@@ -18,6 +18,9 @@ namespace Celeste.Mod.FiniteLives
         public override Type SessionType => typeof(FiniteLivesSession);
         public static FiniteLivesSession Session => (FiniteLivesSession)Instance._Session;
 
+        public override Type SettingsType => typeof(FiniteLivesSettings);
+        public static FiniteLivesSettings Settings => (FiniteLivesSettings)Instance._Settings;
+
         /// <summary>
         /// Default constructor. Initialize instance var and chapter dictionary.
         /// </summary>
