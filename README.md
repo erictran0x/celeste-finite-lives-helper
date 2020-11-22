@@ -1,4 +1,4 @@
-# FiniteLivesHelper
+# FiniteLivesHelper (Celeste Mod)
 ## Purpose
 FiniteLivesHelper is a helper mod for Celeste intended to give the player a finite number of lives in your maps. Originally, players have infinite lives to get across different screens.
 
@@ -26,6 +26,5 @@ Non-positive numbers and non-numbers represent infinite lives.
 Build `finite-lives-helper.sln` and insert the built `finite-lives-helper.dll` into your mod archive. Of course, edit your `everest.yaml` accordingly. Tested and working with Everest build 1992.
 
 ## TODO
-- User-setting that adjusts y-position of life display
 - Submit the mod to gamebanana.com
 - Ability to disable "Save and Quit" menu option
