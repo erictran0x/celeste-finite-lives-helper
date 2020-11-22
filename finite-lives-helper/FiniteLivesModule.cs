@@ -93,7 +93,7 @@ namespace Celeste.Mod.FiniteLives
         private void OnPlayerDeath(Player player)
         {
             // Don't do anything if any of the conditions meet
-            if (infiniteLives || HasGoldenBerry(player) || !enabled)
+            if (infiniteLives || (player.Scene as Level).Session.GrabbedGolden || !enabled)
                 return;
 
             // Decrement life count if player does not have infinite lives
@@ -225,21 +225,6 @@ namespace Celeste.Mod.FiniteLives
                 SaveSessionData();
                 Log($"OnLevelEnter: Entering from chapter select");
             }           
-        }
-
-        /// <summary>
-        /// Check whether player is holding the golden berry.
-        /// </summary>
-        /// <param name="player">Player object.</param>
-        /// <returns></returns>
-        private bool HasGoldenBerry(Player player)
-        {
-            foreach (Follower current in player.Leader.Followers)
-            {
-                if (current.Entity is Strawberry && (current.Entity as Strawberry).Golden && !(current.Entity as Strawberry).Winged)
-                    return true;
-            }
-            return false;
         }
 
         /// <summary>
