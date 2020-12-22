@@ -150,7 +150,7 @@ namespace Celeste.Mod.FiniteLives
                 return;
 
             lifeCount = Math.Max(lifeCount, newLives.Value);  // Don't punish player for being too good
-            infiniteLives = newLives.Value <= 0;
+            infiniteLives = newLives.Value < 0;
             SaveSessionData();
             display.SetDisplayText(infiniteLives ? "inf" : lifeCount.ToString());
 
